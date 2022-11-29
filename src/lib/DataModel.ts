@@ -15,8 +15,6 @@ export abstract class DataModel<Type> {
 			const data = await db.getData(this.dataPath);
 			return data
 		} catch(error) {
-			// The error will tell you where the DataPath stopped. In this case test1
-			// Since /test1/test does't exist.
 			console.error(error);
 		};
 	}

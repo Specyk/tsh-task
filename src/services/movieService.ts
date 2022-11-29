@@ -25,13 +25,10 @@ export async function getMovies(filter: GetMoviesFilter): Promise<Movie[]> {
 		return getByGenres(filter)
 	}
 
-	// And the last one. If we provide both duration and genres parameter, then we should get the same result as for genres parameter only, but narrowed by a runtime. So we should return only those movies that contain at least one of the specified genres and have a runtime between <duration - 10> and <duration + 10>.
-
 	const movies = await getByGenres(filter)
 	const filtered = movies.filter(movie => isNearbyTime(movie.data.runtime, filter.duration))
 
 	return filtered
-	// In any of those cases we don't want to have duplicates.
 }
 
 export async function getRandomMovie(filter?: GetMoviesFilter) {
@@ -47,7 +44,6 @@ export async function getRandomMovie(filter?: GetMoviesFilter) {
 
 async function getByGenres(filter: GetMoviesFilter): Promise<Movie[]> {
 	const movies = await Movie.getAll()
-	// If we provide only genres parameter, then it should return all movies that contain at least one of the specified genres. Also movies should be orderd by a number of genres that match. For example if we send a request with genres [Comedy, Fantasy, Crime] then the top hits should be movies that have all three of them, then there should be movies that have one of [Comedy, Fantasy], [comedy, crime], [Fantasy, Crime] and then those with Comedy only, Fantasy only and Crime only.
 
 	const moviesCounted = movies.map(movie => ({movie, matches: countMatches(movie, filter)})).filter(m => m.matches > 0)
 	const sorted = moviesCounted.sort((a, b) => a.matches - b.matches)
@@ -64,7 +60,6 @@ function countMatches(movie, filter) {
 }
 
 function isNearbyTime(runtime: any, duration: string): boolean {
-	// runtime between <duration - 10> and <duration + 10>.
 	const v1 = parseInt(runtime)
 	const v2 = parseInt(duration)
 
@@ -81,13 +76,10 @@ function shuffle(array: any[]): any[] {
 		tmpVal: any,
 		randIndex: number;
 
-	// While there remain elements to shuffle...
 	while (0 !== curIndex) {
-		// Pick a remaining element...
 		randIndex = Math.floor(Math.random() * curIndex);
 		curIndex -= 1;
 
-		// And swap it with the current element.
 		tmpVal = array[curIndex];
 		array[curIndex] = array[randIndex];
 		array[randIndex] = tmpVal;
