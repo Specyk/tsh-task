@@ -1,1 +1,1 @@
-GET http://localhost:3000/movies?genres='aa,bb&duration=70
+GET http://localhost:3000/movies?duration=90

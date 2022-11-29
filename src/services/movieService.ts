@@ -30,7 +30,7 @@ export async function getRandomMovie(filter?: GetMoviesFilter) {
 	const shuffled = shuffle(movies)
 
 	if(filter?.duration) {
-		return shuffled.find(movie => isNearbyTime(movie.data.runtime, filter.duration))
+		return shuffled.find(movie => isNearbyTime(movie.runtime, filter.duration))
 	}
 
 	return shuffled[0]

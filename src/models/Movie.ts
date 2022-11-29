@@ -53,8 +53,8 @@ const MovieSchema = z.object({
 type MovieData = z.infer<typeof MovieSchema>
 
 export class Movie extends DataModel<MovieData> {
-	schema = MovieSchema
-	dataPath = "movies"
+	readonly schema = MovieSchema
+	static readonly dataPath = "/movies"
 
 	constructor(data) {
 		super(data)
@@ -66,7 +66,7 @@ export class Movie extends DataModel<MovieData> {
 	}
 
 	static async getAll(): Promise<Movie[]> {
-		return super.getAll(this.dataPath)
+		return super.getAll(Movie.dataPath)
 	}
 
 	async save() {
