@@ -5,10 +5,10 @@ import { z, ZodObject, ZodType } from "zod";
 const db = new JsonDB(new Config(path.join(process.cwd(), 'data/db.json'), true, false, '/'));
 
 export abstract class DataModel<Type> {
-	protected schema: ZodType<any>
-	protected static dataPath: string
+	protected readonly schema: ZodType<any>
+	protected  static readonly dataPath: string
 
-	constructor(private data: Type) {}
+	constructor(public readonly data: Type) {}
 
 	protected static async getData() {
 		try {

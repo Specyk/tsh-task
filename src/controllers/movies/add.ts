@@ -3,7 +3,8 @@ import * as movieService from "../../services/movieService"
 
 const router = Router()
 
-router.post("/add", async (req, res) => {
+
+router.post("/", async (req, res) => {
 	try {
 		await movieService.addMovie(req.body)
 		res.status(201).send()

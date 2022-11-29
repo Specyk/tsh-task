@@ -65,6 +65,10 @@ export class Movie extends DataModel<MovieData> {
 		await movie.save()
 	}
 
+	static async getAll(): Promise<Movie[]> {
+		return super.getAll(this.dataPath)
+	}
+
 	async save() {
 		await super.save(Movie.dataPath)
 	}
