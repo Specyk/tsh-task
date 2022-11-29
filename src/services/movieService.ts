@@ -1,10 +1,19 @@
+import { ZodError } from 'zod';
 import { Movie } from '../models/Movie';
 import { GetMoviesFilter as GetMoviesFilter } from './interfaces/GetMoviesFilter';
+import { InvalidParamError } from '../exception/InvalidParamError';
+
 
 export async function addMovie(data) {
 	const movie = new Movie(data)
-
-	await movie.save()
+	try {
+		await movie.save()
+	} catch(err) {
+		if(err instanceof ZodError) {
+			const e = new InvalidParamError(err.message)
+			throw e
+		}
+	}
 }
 
 export async function getMovies(filter: GetMoviesFilter): Promise<Movie[]> {
