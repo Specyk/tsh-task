@@ -1,11 +1,6 @@
 import { DataModel } from "../lib/DataModel";
 import { z } from "zod";
 
-const User = z.object({
-	username: z.string(),
-});
-
-User.parse({ username: "Ludwig" });
 
 const MovieSchema = z.object({
 	username: z.string(),
@@ -28,10 +23,13 @@ const MovieSchema = z.object({
 	}),
 	"genres": z.string({
 		required_error: "genres is required"
-		// todo predefined
 	}).array().nonempty({
 		message : "At least 1 genre must be passed"
-	}),
+	}).and(z.custom((data: string[]) => {
+		return data.every(item => {
+			return genres.some(genre => genre=== item)
+		})
+	})),
 	"director": z.string({
 		required_error: "Director is required",
 
