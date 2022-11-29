@@ -7,7 +7,7 @@ export async function addMovie(data) {
 	await movie.save()
 }
 
-export async function getMovies(filter: GetMoviesFilter) {
+export async function getMovies(filter: GetMoviesFilter): Promise<Movie[]> {
 	if(!filter.genres) {
 		return getRandomMovie(filter)
 	}
@@ -30,17 +30,17 @@ export async function getRandomMovie(filter?: GetMoviesFilter) {
 	const shuffled = shuffle(movies)
 
 	if(filter?.duration) {
-		return shuffled.find(movie => isNearbyTime(movie.runtime, filter.duration))
+		return [shuffled.find(movie => isNearbyTime(movie.runtime, filter.duration))]
 	}
 
-	return shuffled[0]
+	return [shuffled[0]]
 }
 
 async function getByGenres(filter: GetMoviesFilter): Promise<Movie[]> {
 	const movies = await Movie.getAll()
 	// If we provide only genres parameter, then it should return all movies that contain at least one of the specified genres. Also movies should be orderd by a number of genres that match. For example if we send a request with genres [Comedy, Fantasy, Crime] then the top hits should be movies that have all three of them, then there should be movies that have one of [Comedy, Fantasy], [comedy, crime], [Fantasy, Crime] and then those with Comedy only, Fantasy only and Crime only.
 
-	const moviesCounted = movies.map(movie => ({movie, matches: countMatches(movie, filter)}))
+	const moviesCounted = movies.map(movie => ({movie, matches: countMatches(movie, filter)})).filter(m => m.matches > 0)
 	const sorted = moviesCounted.sort((a, b) => a.matches - b.matches)
 	return sorted.map(entry => entry.movie)
 }
