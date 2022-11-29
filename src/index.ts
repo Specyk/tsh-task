@@ -1,11 +1,11 @@
 import express from "express"
+import { mainRouter } from "./controllers";
 const app = express()
 
 const port = 3000
 
 
-// load controllers
-require('./lib/boot')(app, { verbose: !module.parent });
+app.use("/", mainRouter)
 
 app.use(function (err, req, res, next) {
 	// log it

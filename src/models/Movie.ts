@@ -62,7 +62,11 @@ export class Movie extends DataModel<MovieData> {
 
 	static async addMovie(data: MovieData) {
 		const movie = new Movie(data)
-		await movie.save(this.dataPath)
+		await movie.save()
+	}
+
+	async save() {
+		await super.save(Movie.dataPath)
 	}
 }
 

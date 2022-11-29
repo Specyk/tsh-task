@@ -13,6 +13,6 @@ export class Genre extends DataModel<any> {
 	}
 
 	static async getAll() {
-		return super.getAll(this.dataPath)
+		return super.getAll(Genre.dataPath)
 	}
 }

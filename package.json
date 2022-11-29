@@ -2,8 +2,8 @@
 	"name": "tfs-task",
 	"main": "src/index",
 	"scripts": {
-		"start": "node --inspect -r ts-node/register -r tsconfig-paths/register src/index.ts",
-		"start:watch": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'app/**/*.spec.ts' --exec 'node -r ts-node/register -r tsconfig-paths/register src/index.ts'",
+		"start": "node --inspect -r ts-node/register src/index.ts",
+		"start:watch": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'app/**/*.spec.ts' --exec 'node -r ts-node/register src/index.ts'",
 		"test": "jest",
 		"test:watch": "jest --watchAll"
 	},
