@@ -1,11 +1,11 @@
 import { Config, JsonDB } from "node-json-db";
 import path from "path";
-import { z, ZodObject } from "zod";
+import { z, ZodObject, ZodType } from "zod";
 
 const db = new JsonDB(new Config(path.join(process.cwd(), 'data/db.json'), true, false, '/'));
 
 export abstract class DataModel<Type> {
-	protected schema: ZodObject<any>
+	protected schema: ZodType<any>
 	protected dataPath: string
 
 	constructor(private data: Type) {}

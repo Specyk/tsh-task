@@ -53,8 +53,6 @@ export class Movie extends DataModel<z.infer<typeof MovieSchema>> {
 	constructor(data) {
 		super(data)
 	}
-
-
 }
 
 // - a list of genres (only predefined ones from db file) (required, array of predefined strings)
