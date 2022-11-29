@@ -6,13 +6,14 @@ const db = new JsonDB(new Config(path.join(process.cwd(), 'data/db.json'), true,
 
 export abstract class DataModel<Type> {
 	protected schema: ZodType<any>
-	protected dataPath: string
+	protected static dataPath: string
 
 	constructor(private data: Type) {}
 
 	protected static async getData() {
 		try {
-			var data = await db.getData("/test1/test/dont/work");
+			const data = await db.getData(this.dataPath);
+			return data
 		} catch(error) {
 			// The error will tell you where the DataPath stopped. In this case test1
 			// Since /test1/test does't exist.
@@ -20,10 +21,13 @@ export abstract class DataModel<Type> {
 		};
 	}
 
-	async save() {
-		const r = this.schema.parse(this.data)
+	async save(dataPath: string) {
+		this.schema.parse(this.data)
+		await db.push(dataPath,this.data);
+	}
 
-		await db.push(this.dataPath,this.data);
-
+	static async getAll(dataPath: string) {
+		const data = await db.getData(dataPath);
+		return data
 	}
 }

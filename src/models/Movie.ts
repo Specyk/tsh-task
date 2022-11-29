@@ -1,5 +1,7 @@
 import { DataModel } from "../lib/DataModel";
 import { z } from "zod";
+import { Genre } from './Genre';
+
 
 
 const MovieSchema = z.object({
@@ -25,8 +27,9 @@ const MovieSchema = z.object({
 		required_error: "genres is required"
 	}).array().nonempty({
 		message : "At least 1 genre must be passed"
-	}).and(z.custom((data: string[]) => {
+	}).and(z.custom(async (data: string[]) => {
 		return data.every(item => {
+			const genres = await Genre.getAll()
 			return genres.some(genre => genre=== item)
 		})
 	})),
@@ -47,11 +50,19 @@ const MovieSchema = z.object({
 	}),
 });
 
-export class Movie extends DataModel<z.infer<typeof MovieSchema>> {
+type MovieData = z.infer<typeof MovieSchema>
+
+export class Movie extends DataModel<MovieData> {
 	schema = MovieSchema
+	dataPath = "movies"
 
 	constructor(data) {
 		super(data)
+	}
+
+	static async addMovie(data: MovieData) {
+		const movie = new Movie(data)
+		await movie.save(this.dataPath)
 	}
 }
 
