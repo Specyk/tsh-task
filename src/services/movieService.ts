@@ -1,4 +1,5 @@
 import { Movie } from '../models/Movie';
+import { GetMoviesParams } from './interfaces/GetMoviesParams';
 
 export async function addMovie(data) {
 	const movie = new Movie(data)
@@ -6,7 +7,7 @@ export async function addMovie(data) {
 	await movie.save()
 }
 
-export function getMovies(arg0: { duration: string | import("qs").ParsedQs | string[] | import("qs").ParsedQs[]; genres: string | import("qs").ParsedQs | string[] | import("qs").ParsedQs[]; }) {
+export function getMovies(data: GetMoviesParams) {
 
 
 
