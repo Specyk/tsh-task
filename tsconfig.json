@@ -19,7 +19,7 @@
 	],
 	"include": [
 		"src/**/*"
-	],
+, "test/controllers/movies/index.spec.ts"	],
 	"exclude": [
 		"node_modules/*",
 		"**/*.d.ts"

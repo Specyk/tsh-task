@@ -46,7 +46,7 @@ async function getByGenres(filter: GetMoviesFilter): Promise<Movie[]> {
 }
 
 function countMatches(movie, filter) {
-	return movie.data.genres.reduce((sum, g) => {
+	return movie.genres.reduce((sum, g) => {
 		if(filter.genres.indexOf(g) > 0) {
 			return sum + 1
 		}
