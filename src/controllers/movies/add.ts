@@ -1,12 +1,16 @@
 import { Router } from "express";
+import * as movieService from "../../services/movieService"
 
 const router = Router()
 
-router.post("/", (req, res) => {
+router.post("/add", async (req, res) => {
 	try {
-		await movieService.addMovie(data)
+		await movieService.addMovie(req.body)
 		res.status(201).send()
 	} catch(err) {
 		// jeśli instanceof Validation todo
 	}
 })
+
+
+export default router

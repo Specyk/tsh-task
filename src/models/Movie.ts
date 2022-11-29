@@ -27,8 +27,8 @@ const MovieSchema = z.object({
 		required_error: "genres is required"
 	}).array().nonempty({
 		message : "At least 1 genre must be passed"
-	}).and(z.custom(async (data: string[]) => {
-		return data.every(item => {
+	}).and(z.custom((data: string[]) => {
+		return data.every(async item => {
 			const genres = await Genre.getAll()
 			return genres.some(genre => genre=== item)
 		})
